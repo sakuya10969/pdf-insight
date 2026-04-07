@@ -1,15 +1,36 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+:root {
+  --bg-start: #f2f9f6;
+  --bg-end: #e7f0ff;
+  --panel: rgba(255, 255, 255, 0.88);
+  --panel-border: rgba(0, 32, 70, 0.12);
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 80% -20%, #b8f6dd 0%, transparent 45%),
+    radial-gradient(circle at 10% 10%, #d6e6ff 0%, transparent 55%),
+    linear-gradient(160deg, var(--bg-start), var(--bg-end));
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+body {
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.mantine-AppShell-main {
+  max-width: 1080px;
+}
+
+.hero-card {
+  cursor: pointer;
+  background: var(--panel);
+  border: 1px dashed var(--panel-border);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0, 56, 75, 0.12);
 }
