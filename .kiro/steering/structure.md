@@ -24,9 +24,18 @@
 │   ├── vite.config.ts
 │   └── Dockerfile
 │
+├── data/                       # ローカルファイルストレージ
+│   ├── pdfs/                   # アップロードされたPDFファイル
+│   │   └── {doc_id}.pdf
+│   └── json/                   # PDF解析結果（チャンク情報JSON）
+│       └── {doc_id}.json
+│
 ├── server/                     # バックエンド（FastAPI）
 │   ├── main.py                 # エントリポイント
 │   ├── modules/                # モジュラーモノリス: 機能モジュール（今後追加）
+│   │   ├── storage/            # ローカルファイルストレージ管理
+│   │   │   ├── service.py
+│   │   │   └── schemas.py
 │   │   ├── pdf/                # PDF解析・チャンク分割
 │   │   │   ├── router.py
 │   │   │   ├── service.py
@@ -73,6 +82,7 @@
 
 | モジュール | 責務 |
 |-----------|------|
+| `storage` | ローカルファイルシステムでのPDF/JSON管理（doc_id単位） |
 | `pdf` | PDFアップロード受付、解析、チャンク分割 |
 | `embedding` | Sentence-Transformersによる埋め込み生成 |
 | `vector_store` | Qdrantへの登録・検索 |
@@ -80,3 +90,23 @@
 | `core` | 共通設定、DI、ミドルウェア |
 
 各モジュールは `router.py`（APIエンドポイント）、`service.py`（ビジネスロジック）、`schemas.py`（Pydanticモデル）で構成する。
+
+## ストレージ設計
+
+### ディレクトリ構成
+
+```
+data/
+├── pdfs/           # アップロードされたPDFファイル
+│   └── {doc_id}.pdf
+└── json/           # PDF解析結果（チャンク情報）
+    └── {doc_id}.json
+```
+
+### 設計方針
+- doc_idはUUIDを使用し、PDFとJSONを同一IDで紐付ける
+- JSONはPDF解析結果のキャッシュ用途（再embeddingやデバッグに再利用）
+- ファイル操作はdoc_id単位（削除・更新時にPDF/JSON/Qdrantを一括処理）
+- Qdrantとの整合性はdoc_idで担保
+- RDB・クラウドストレージは使用しない（PoC段階）
+- 後からクラウドストレージに置き換え可能な抽象化を意識する
