@@ -31,28 +31,29 @@
 │       └── {doc_id}.json
 │
 ├── server/                     # バックエンド（FastAPI）
-│   ├── main.py                 # エントリポイント
-│   ├── modules/                # モジュラーモノリス: 機能モジュール（今後追加）
-│   │   ├── storage/            # ローカルファイルストレージ管理
-│   │   │   ├── service.py
-│   │   │   └── schemas.py
-│   │   ├── pdf/                # PDF解析・チャンク分割
-│   │   │   ├── router.py
-│   │   │   ├── service.py
-│   │   │   └── schemas.py
-│   │   ├── embedding/          # 埋め込み生成
-│   │   │   ├── service.py
-│   │   │   └── schemas.py
-│   │   ├── vector_store/       # Qdrant操作
-│   │   │   ├── service.py
-│   │   │   └── schemas.py
-│   │   └── chat/               # LLM回答生成
-│   │       ├── router.py
-│   │       ├── service.py
-│   │       └── schemas.py
-│   ├── core/                   # 共通設定・ユーティリティ
-│   │   ├── config.py
-│   │   └── dependencies.py
+│   ├── app/
+│   │   ├── main.py             # エントリポイント
+│   │   ├── modules/            # モジュラーモノリス: 機能モジュール
+│   │   │   ├── storage/        # ローカルファイルストレージ管理
+│   │   │   │   ├── service.py
+│   │   │   │   └── schemas.py
+│   │   │   ├── pdf/            # PDF解析・チャンク分割
+│   │   │   │   ├── router.py
+│   │   │   │   ├── service.py
+│   │   │   │   └── schemas.py
+│   │   │   ├── embedding/      # 埋め込み生成
+│   │   │   │   ├── service.py
+│   │   │   │   └── schemas.py
+│   │   │   ├── vector_store/   # Qdrant操作
+│   │   │   │   ├── service.py
+│   │   │   │   └── schemas.py
+│   │   │   └── chat/           # LLM回答生成
+│   │   │       ├── router.py
+│   │   │       ├── service.py
+│   │   │       └── schemas.py
+│   │   └── core/               # 共通設定・ユーティリティ
+│   │       ├── config.py
+│   │       └── dependencies.py
 │   ├── pyproject.toml
 │   └── .python-version
 │
