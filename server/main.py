@@ -1,6 +1,16 @@
-def main():
-    print("Hello from server!")
+from __future__ import annotations
+
+import uvicorn
+
+from app.core.config import get_settings
+
+settings = get_settings()
 
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(
+        "app.main:app",
+        host=settings.app_host,
+        port=settings.app_port,
+        reload=settings.app_reload,
+    )
