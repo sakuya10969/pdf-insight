@@ -20,8 +20,8 @@
 
 ### 例
 
-feat: PDFアップロード追加  
-fix: nullエラー修正  
+feat: add pdf uploading 
+fix: null error
 
 ---
 
