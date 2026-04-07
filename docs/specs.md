@@ -31,3 +31,14 @@
 - Qdrant用docker-compose設定
 - ヘルスチェックエンドポイント
 - フロントエンド向けCORS設定
+
+## 実装状況（2026-04-07）
+- SP-01 実装済み: `/api/pdf/upload`でPDF保存、PyMuPDF4LLMベース解析、チャンクJSON保存、埋め込み生成、Qdrant登録まで接続。
+- SP-02 実装済み: `/api/pdf/documents`一覧取得と`/api/pdf/documents/{doc_id}`削除で、PDF/JSON/メタデータ/Qdrantベクトルを連動削除。
+- SP-03 実装済み: `/api/chat/query`でクエリ埋め込み→top-k検索→Ollama回答生成、検索UIで回答とソース表示。
+- SP-04 実装済み: `root.tsx`をMantine AppShell化し、Upload/Search/Documentsナビゲーションとモバイル折りたたみ対応を実装。
+- SP-05 実装済み: FastAPIエントリポイント、config管理、CORS、health、起動時Qdrantコレクション作成を実装。
+
+## 未実装提案（簡易）
+- 検索品質向上: 現在は固定`top-k=3`中心のため、再ランキング（cross-encoder）やメタデータフィルタを追加すると回答の関連度が安定する。
+- 運用性向上: ドキュメント処理を非同期ジョブ化し、アップロード直後にジョブIDを返す構成へ拡張すると大きいPDFでのUXが改善する。
